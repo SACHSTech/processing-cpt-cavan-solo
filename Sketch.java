@@ -74,31 +74,23 @@ public class Sketch extends PApplet {
     if (blnGame1 == true) {
       intTime = 0;
       blnGameStart = true;
+      image(imgSetting1, 0, 0);
     }
 
     if (blnGame2 == true) {
       intTime = 30; 
       blnGameStart = true;
+      image(imgSetting2, 0, 0);
     }
 
 
     if (blnGame3 == true) {
       intTime = 60;
       blnGameStart = true;
+      image(imgSetting3, 0, 0);
     }
 
     if (blnGameStart == true){
-        
-    // at different times the background/level changes
-    if (intTime >= 0 && intTime <= 30){
-      image(imgSetting1, 0, 0);
-    }
-    if (intTime > 30 && intTime <= 60){  
-      image(imgSetting2, 0, 0);
-    }
-    if (intTime > 60) {
-      image(imgSetting3, 0, 0);
-    }
 
     // not exact seconds but close enough
     intTimeCalc += 2;
