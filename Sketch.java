@@ -42,7 +42,6 @@ public class Sketch extends PApplet {
     imgSetting3 = loadImage("StreetBackground3.jpg");
     imgSetting3.resize(width, height);
       
-      
     imgPlayer = loadImage("PlayerCar.png");
     imgPlayer.resize(50, 75);
 
@@ -104,11 +103,18 @@ public class Sketch extends PApplet {
     //player stuff
     image(imgPlayer, fltCarX, fltCarY);
 
-    if (fltCarX < 0){
+    if (fltCarX <= 0){
       fltCarX = width;
     }
-    else if (fltCarX > width-75){
+    else if (fltCarX >= width-75){
       fltCarX = width-100;
+    }
+
+    if (fltCarY <= height/2){
+      fltCarY = height/2 + 1;
+    }
+    else if (fltCarY >= height-50){
+      fltCarY = height-51;
     }
     
 
