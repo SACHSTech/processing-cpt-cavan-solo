@@ -14,7 +14,8 @@ public class Sketch extends PApplet {
   int intWallSpeed = 2;
   int intWallOneX = 0;
   int intWallTwoX = 0;
-  
+  float fltCarX = 200;
+  float fltCarY = 200;
   
 
   boolean mainMenu = true;
@@ -22,6 +23,7 @@ public class Sketch extends PApplet {
   boolean blnGame2 = false;
   boolean blnGame3 = false;
   boolean blnGameStart = false;
+  boolean blnChaosDifficulty = false;
 
   
   public void settings() {
@@ -78,14 +80,14 @@ public class Sketch extends PApplet {
     }
 
     if (blnGame2 == true) {
-      intTime = 30; 
+      intTime = 0; 
       blnGameStart = true;
       image(imgSetting2, 0, 0);
     }
 
 
     if (blnGame3 == true) {
-      intTime = 60;
+      intTime = 0;
       blnGameStart = true;
       image(imgSetting3, 0, 0);
     }
@@ -100,7 +102,15 @@ public class Sketch extends PApplet {
     text("time: " + intTime, width/1.5f, height/3.8f);
 
     //player stuff
-      
+    image(imgPlayer, fltCarX, fltCarY);
+
+    if (fltCarX < 0){
+      fltCarX = width;
+    }
+    else if (fltCarX > width-75){
+      fltCarX = width-100;
+    }
+    
 
     if (intWallOneX >= width){
       intWallOneX = 0;
@@ -108,7 +118,8 @@ public class Sketch extends PApplet {
     if (intWallTwoX >= width){
       intWallTwoX = 0;
     }
-      
+
+    // Brick Wall
     if (intTime >= 0 && intTime <= 30){
       image(imgWall, intWallOneX, height/2);
       intWallOneX += intWallSpeed;
@@ -116,10 +127,44 @@ public class Sketch extends PApplet {
       intWallTwoX += intWallSpeed + 1;
       }
 
+    // Birds
+    if (intTime > 30 && intTime <= 60){
+      
+    }
+
+    // Drunk Drivers
+    if (intTime > 60 && intTime <= 90){
+      
+    }
+
+    // All of the projectiles on the road
+    if (intTime > 60 && intTime <= 90){
+      
+    }
+
+    // Boss
+    if (blnChaosDifficulty == true && intTime >= 90) {
+      
+    }
     
     
 
       
-  }  
+    }
+  } 
+  public void keyPressed() {
+    if (key == 'w') {
+      fltCarY -= 30;
+    }   
+    if (key == 's') {
+      fltCarY += 30;
+    }   
+    if (key == 'a') {
+      fltCarX -= 30;
+    }   
+    if (key == 'd') {
+      fltCarX += 30;
+    }   
+  }
+  
 }
-} 
