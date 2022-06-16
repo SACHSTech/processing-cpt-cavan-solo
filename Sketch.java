@@ -9,6 +9,7 @@ public class Sketch extends PApplet {
   PImage imgSetting3;
   PImage imgPlayer;
   PImage imgWall;
+  PImage imgBird;
   
   int intTimeCalc = 0;
   int intTime = 0;
@@ -18,10 +19,15 @@ public class Sketch extends PApplet {
   int intWallOneX = 0;
   int intWallTwoX = 0;
   int intHealth = 100;
+  int intBirdCount = 10;
 
-  
+  float[] birdX = new float [intBirdCount];
+  float[] birdY = new float [intBirdCount];
+  float fltBirdSpeedX = 0;
+  float fltBirdSpeedY = 0;
   float fltCarX = 700;
   float fltCarY = 300;
+  
   
 
   boolean blnMainMenu = true;
@@ -30,6 +36,7 @@ public class Sketch extends PApplet {
   boolean blnGame3 = false;
   boolean blnGameStart = false;
   boolean blnNitro = false;
+  boolean blnBirdStorm = false;
 
   ArrayList<Integer> intHitCount = new ArrayList<Integer>();
   
@@ -54,6 +61,15 @@ public class Sketch extends PApplet {
 
     imgWall = loadImage("BrickWall.jpg");
     imgWall.resize(25, height/3);
+
+    imgBird = loadImage("Bird.png");
+    imgBird.resize(50, 50);
+    
+      
+    for (int i = 0; i < birdY.length; i++){
+      birdY[i] = 10;
+      birdX[i] = random(width);
+    }
     
   }
 
@@ -67,16 +83,19 @@ public class Sketch extends PApplet {
     if (keyPressed && key == '1' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame1 = true;
+      intBirdCount = 5;
     }
 
     if (keyPressed && key == '2' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame2 = true;
+      intBirdCount = 10;
     }
 
     if (keyPressed && key == '3' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame3 = true;
+      intBirdCount = 15;
     }
     
     if (blnGame1 == true) {
@@ -135,7 +154,7 @@ public class Sketch extends PApplet {
     }
 
     // Brick Wall
-    if (intTime >= 0 && intTime <= 30){
+    if (intTime >= 0){
       image(imgWall, intWallOneX, height/2);
       intWallOneX += intWallSpeed;
       image(imgWall, intWallTwoX, height/1.3f);
@@ -143,10 +162,32 @@ public class Sketch extends PApplet {
       }
 
     // Birds
-    if (intTime > 30 && intTime <= 60){
-      
+    if (intTime > 30 && blnGame1 == true){
+      fltBirdSpeedX = random(-20,20);
+      fltBirdSpeedY = random(-20,20);
+    }
+    else if (intTime > 30 && blnGame2 == true){
+      fltBirdSpeedX = random(-30,30);
+      fltBirdSpeedY = random(-30,30);
+    }
+    else if(intTime > 30 && blnGame3 == true){
+      fltBirdSpeedX = random(-50,50);
+      fltBirdSpeedY = random(-50,50);
     }
 
+    for (int i = 0; i < birdY.length; i++){
+        
+      image(imgBird, birdX[i], birdY[i]);
+      birdX[i] += fltBirdSpeedX;
+      birdY[i] += fltBirdSpeedY;
+
+      if (birdX[i] < 0 || birdX[i] > width) {
+        birdX[i] *= -1;
+      }
+      if (birdY[i] < 0 || birdY[i] > height) {
+        birdY[i] *= -1;
+    }
+  }
     // Drunk Drivers
     if (intTime > 60 && intTime <= 90){
       
