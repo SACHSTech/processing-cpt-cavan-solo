@@ -67,7 +67,7 @@ public class Sketch extends PApplet {
     
       
     for (int i = 0; i < birdY.length; i++){
-      birdY[i] = 10;
+      birdY[i] = random(0,100);
       birdX[i] = random(width);
     }
     
@@ -83,19 +83,16 @@ public class Sketch extends PApplet {
     if (keyPressed && key == '1' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame1 = true;
-      intBirdCount = 5;
     }
 
     if (keyPressed && key == '2' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame2 = true;
-      intBirdCount = 10;
     }
 
     if (keyPressed && key == '3' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame3 = true;
-      intBirdCount = 15;
     }
     
     if (blnGame1 == true) {
@@ -162,17 +159,17 @@ public class Sketch extends PApplet {
       }
 
     // Birds
-    if (intTime > 30 && blnGame1 == true){
+    if (intTime > 10 && blnGame1 == true){
       fltBirdSpeedX = random(-20,20);
       fltBirdSpeedY = random(-20,20);
     }
-    else if (intTime > 30 && blnGame2 == true){
+    else if (intTime > 10 && blnGame2 == true){
+      fltBirdSpeedX = random(-25,25);
+      fltBirdSpeedY = random(-25,25);
+    }
+    else if(intTime > 10 && blnGame3 == true){
       fltBirdSpeedX = random(-30,30);
       fltBirdSpeedY = random(-30,30);
-    }
-    else if(intTime > 30 && blnGame3 == true){
-      fltBirdSpeedX = random(-50,50);
-      fltBirdSpeedY = random(-50,50);
     }
 
     for (int i = 0; i < birdY.length; i++){
@@ -181,11 +178,12 @@ public class Sketch extends PApplet {
       birdX[i] += fltBirdSpeedX;
       birdY[i] += fltBirdSpeedY;
 
+      // Edge detection, when the birds go offscreen they respawn at the top
       if (birdX[i] < 0 || birdX[i] > width) {
-        birdX[i] *= -1;
+        birdX[i] = random(width);;
       }
       if (birdY[i] < 0 || birdY[i] > height) {
-        birdY[i] *= -1;
+        birdY[i] = random(0,50);
     }
   }
     // Drunk Drivers
