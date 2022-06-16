@@ -19,7 +19,7 @@ public class Sketch extends PApplet {
   int intWallOneX = 0;
   int intWallTwoX = 0;
   int intHealth = 100;
-  int intBirdCount = 10;
+  int intBirdCount = random(5,10);
 
   float[] birdX = new float [intBirdCount];
   float[] birdY = new float [intBirdCount];
@@ -185,16 +185,17 @@ public class Sketch extends PApplet {
       if (birdY[i] < 0 || birdY[i] > height) {
         birdY[i] = random(0,50);
     }
+      // collision detection birds
+      if (dist(fltCarX, fltCarY, birdX[i], birdY[i]) <= 37.4){
+        intHealth -= 1;
+      }
+      
   }
     // Drunk Drivers
-    if (intTime > 60 && intTime <= 90){
+    if (intTime > 20){
       
     }
 
-    // All of the projectiles on the road
-    if (intTime > 60){
-      
-    }
 
     //collision detection wall
     if (dist(fltCarX, fltCarY, intWallOneX, height/1.69f) <= 37.4){
