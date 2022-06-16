@@ -12,9 +12,7 @@ The objective of "The Highway" is for the user to reach the highest distance the
 The player is in control of a car. In order to control movement you will use the awsd buttons on your keyboard. When you hit objects you will lose health. Once health is zero the game ends. As you gain more distance you will encounter different projectiles with different movement patterns.
 
 ### Speeding Up
-In order to make the game fair, the player can phase through the various obstacles, and if they hit the objects at max speed they will lose less health than a slower collision. The problem with abusing this mechanic is that you will easily lose control of the car while taking constant damage due to it's extremely high top speed. 
-
-You can choose a more accurate approach when playing the game by simply tapping the awsd buttons or you can choose a speedy approach by holding the awsd buttons.
+In order to make the game fair, the player will phase through the various obstacles, and if they hit the objects while pressing the 'a' button. The problem with abusing this feature is that you have limited gas and using too much will penalize you (more on this later). Simply pressing the 'a' button to save on gas won't make you completely invincible. When in collision with an object you will take constant damage. In order to prevent all damage you must hold the 'a' button for the duration of the collision
 
 ### Obstacle 1: Brick Walls
 Brick walls are the easiest obstacle to deal with and will spawn right at the begining of the game. They move from left to right. If you hit one of these they won't despawn and you will lose health. If you want to take minimum damage from these, crash into them at top speed to demolish the wall and take reduced damage.
@@ -23,4 +21,7 @@ Brick walls are the easiest obstacle to deal with and will spawn right at the be
 Birds are the second obstacle type that appear in the game. They spawn near the top of the map at a random x and y value. Their velocity changes rapidly at a random value so their movement is extremely unpredictable. When they go offscreen they return to the top which gives the player some breathing room. Same as the walls if you crash into them at top speed you will take reduced damage; however, the sheer number of birds will make the damage brutally add up.
 
 ### Obstacle 3: Drunk Drivers
+Drunk drivers are the 3rd obstacle. They behave like the player in that they have to stay on the road and have a health pool. When hit with obstacles they will also take damage. When you hit a drunk driver your health will go down by a massive random amount. 
 
+### Gas
+When you move forward using the 'a' button you will lose gas. Once gas runs out you have to go to a gas station and refill, which makes you lose 30 distance. Using gas gives invincibility frames.

@@ -19,8 +19,11 @@ public class Sketch extends PApplet {
   int intWallOneX = 0;
   int intWallTwoX = 0;
   int intHealth = 100;
-  int intBirdCount = random(5,10);
-
+  int intGas = 100;
+  
+  float fltBirdCount = random(5,10);
+  int intBirdCount = (int)fltBirdCount;
+  
   float[] birdX = new float [intBirdCount];
   float[] birdY = new float [intBirdCount];
   float fltBirdSpeedX = 0;
@@ -35,8 +38,8 @@ public class Sketch extends PApplet {
   boolean blnGame2 = false;
   boolean blnGame3 = false;
   boolean blnGameStart = false;
-  boolean blnNitro = false;
-  boolean blnBirdStorm = false;
+  boolean blnIFrames = false;
+  
 
   ArrayList<Integer> intHitCount = new ArrayList<Integer>();
   
@@ -124,6 +127,8 @@ public class Sketch extends PApplet {
     fill(0);
     text("time: " + intTime, width/1.5f, height/3.8f);
     text("health: " + intHealth, width/2.2f, height/3.8f);
+    text("gas: " + intGas, width/1.2f, height/3.8f);
+
 
     //player stuff
     image(imgPlayer, fltCarX, fltCarY);
@@ -179,32 +184,35 @@ public class Sketch extends PApplet {
       birdY[i] += fltBirdSpeedY;
 
       // Edge detection, when the birds go offscreen they respawn at the top
+      
       if (birdX[i] < 0 || birdX[i] > width) {
         birdX[i] = random(width);;
       }
       if (birdY[i] < 0 || birdY[i] > height) {
         birdY[i] = random(0,50);
     }
-      // collision detection birds
-      if (dist(fltCarX, fltCarY, birdX[i], birdY[i]) <= 37.4){
-        intHealth -= 1;
+      if (blnIFrames == false) {
+        // collision detection birds
+        if (dist(fltCarX, fltCarY, birdX[i], birdY[i]) <= 37.4){
+          intHealth -= 1;
+        }
       }
-      
+
   }
     // Drunk Drivers
     if (intTime > 20){
       
     }
 
-
-    //collision detection wall
-    if (dist(fltCarX, fltCarY, intWallOneX, height/1.69f) <= 37.4){
-        intHealth -= 1;
-      }
-    if (dist(fltCarX, fltCarY, intWallTwoX, height/1.26f) <= 37.4){
-        intHealth -= 1;
-      }
-
+    if (blnIFrames == false){
+      //collision detection wall
+      if (dist(fltCarX, fltCarY, intWallOneX, height/1.69f) <= 37.4){
+          intHealth -= 1;
+        }
+      if (dist(fltCarX, fltCarY, intWallTwoX, height/1.26f) <= 37.4){
+          intHealth -= 1;
+        }
+    }
       
   }
 
@@ -219,10 +227,18 @@ public class Sketch extends PApplet {
     }   
     if (key == 'a') {
       fltCarX -= 30;
-    }   
+      intGas -= 2;
+      blnIFrames = true;
+    }
     if (key == 'd') {
       fltCarX += 30;
     }   
+  }
+
+  public void keyReleased(){
+    if (key == 'a') {
+      blnIFrames = false;
+    }
   }
   
 }
