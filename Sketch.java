@@ -1,6 +1,7 @@
 import processing.core.PApplet;
 import processing.core.PImage;
 import java.util.ArrayList;
+import processing.core.PVector;
 
 public class Sketch extends PApplet {
 
@@ -10,6 +11,7 @@ public class Sketch extends PApplet {
   PImage imgPlayer;
   PImage imgWall;
   PImage imgBird;
+  PImage imgCarTrail;
   
   int intTimeCalc = 0;
   int intTime = 0;
@@ -41,7 +43,7 @@ public class Sketch extends PApplet {
   boolean blnIFrames = false;
   
 
-  ArrayList<Integer> intHitCount = new ArrayList<Integer>();
+  ArrayList<PVector> pvCarTrail = new ArrayList<PVector>();
   
   public void settings() {
     size(800, 400);
@@ -67,7 +69,9 @@ public class Sketch extends PApplet {
 
     imgBird = loadImage("Bird.png");
     imgBird.resize(50, 50);
-    
+
+    imgCarTrail = loadImage("CarTrail.png");
+    imgCarTrail.resize(400, 75);
       
     for (int i = 0; i < birdY.length; i++){
       birdY[i] = random(0,100);
@@ -120,6 +124,16 @@ public class Sketch extends PApplet {
   //game start
   if (blnGameStart == true && intHealth > 0){
 
+  if (keyPressed == false){
+    fltCarX -= 1;
+  }
+
+  pvCarTrail.add(new PVector(fltCarX, fltCarY));
+    
+  if (pvCarTrail.size() > 20){
+    pvCarTrail.remove(0);
+  }
+
     // not exact seconds but close enough
     intTimeCalc += 2;
     intTime = intTimeCalc/100;
@@ -165,16 +179,16 @@ public class Sketch extends PApplet {
 
     // Birds
     if (intTime > 10 && blnGame1 == true){
-      fltBirdSpeedX = random(-20,20);
-      fltBirdSpeedY = random(-20,20);
+      fltBirdSpeedX = random(0,1);
+      fltBirdSpeedY = random(0,1);
     }
     else if (intTime > 10 && blnGame2 == true){
-      fltBirdSpeedX = random(-25,25);
-      fltBirdSpeedY = random(-25,25);
+      fltBirdSpeedX = random(0,5);
+      fltBirdSpeedY = random(0,5);
     }
     else if(intTime > 10 && blnGame3 == true){
-      fltBirdSpeedX = random(-30,30);
-      fltBirdSpeedY = random(-30,30);
+      fltBirdSpeedX = random(0,10);
+      fltBirdSpeedY = random(0,10);
     }
 
     for (int i = 0; i < birdY.length; i++){
@@ -189,7 +203,7 @@ public class Sketch extends PApplet {
         birdX[i] = random(width);;
       }
       if (birdY[i] < 0 || birdY[i] > height) {
-        birdY[i] = random(0,50);
+        birdY[i] = random(0, 10);
     }
       if (blnIFrames == false) {
         // collision detection birds
@@ -200,7 +214,7 @@ public class Sketch extends PApplet {
 
   }
     // Drunk Drivers
-    if (intTime > 20){
+    if (intTime % 30 == 0){
       
     }
 
@@ -227,8 +241,12 @@ public class Sketch extends PApplet {
     }   
     if (key == 'a') {
       fltCarX -= 30;
-      intGas -= 2;
+      intGas -= 1;
       blnIFrames = true;
+      for (int i = 0; i < pvCarTrail.size(); i++) {
+        PVector pvTrailPosition = pvCarTrail.get(i);
+        image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+      }
     }
     if (key == 'd') {
       fltCarX += 30;
@@ -238,6 +256,11 @@ public class Sketch extends PApplet {
   public void keyReleased(){
     if (key == 'a') {
       blnIFrames = false;
+      intGas -= 3;
+      for (int i = 0; i < pvCarTrail.size(); i++) {
+        PVector pvTrailPosition = pvCarTrail.get(i);
+        image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+      }
     }
   }
   

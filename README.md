@@ -24,4 +24,4 @@ Birds are the second obstacle type that appear in the game. They spawn near the 
 Drunk drivers are the 3rd obstacle. They behave like the player in that they have to stay on the road and have a health pool. When hit with obstacles they will also take damage. When you hit a drunk driver your health will go down by a massive random amount. 
 
 ### Gas
-When you move forward using the 'a' button you will lose gas. Once gas runs out you have to go to a gas station and refill, which makes you lose 30 distance. Using gas gives invincibility frames.
+When you move forward using the 'a' button you will lose gas. When you released the gas button you lose 3 gas and when holding it you lose 1 gas every interval. This makes tapping the 'a' key once to dodge an obstacle less gass efficient. Once gas runs out you have to go to a gas station and refill, which makes you lose 30 distance. When using gas you can't lose health. 
