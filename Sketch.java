@@ -160,7 +160,7 @@ public class Sketch extends PApplet {
     intTime = intTimeCalc/100;
     // display time
     fill(0);
-    text("Time: " + intTime, width/1.5f, height/3.8f);
+    text("Distance: " + intTime, width/1.5f, height/3.8f);
     text("Health: " + intHealth, width/2, height/3.8f);
     text("Gas: " + intGas, width/2.7f, height/3.8f);
 
