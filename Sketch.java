@@ -6,6 +6,7 @@ import processing.core.PVector;
 public class Sketch extends PApplet {
 
   // declare PImage variables
+  PImage imgMainMenu;
   PImage imgSetting1;
   PImage imgSetting2;
   PImage imgSetting3;
@@ -57,6 +58,9 @@ public class Sketch extends PApplet {
   public void setup() {
 
     // resize and load images
+    imgMainMenu = loadImage("MainMenu.png");
+    imgMainMenu.resize(width, height);
+    
     imgSetting1 = loadImage("StreetBackground1.jpg");
     imgSetting1.resize(width, height);
 
@@ -90,7 +94,7 @@ public class Sketch extends PApplet {
   public void draw() {
 
     if (blnMainMenu == true) {
-      // add main menu
+      image(imgMainMenu, 0, 0);
     }
 
     // if key 1 is pressed easy difficulty is played
@@ -163,7 +167,6 @@ public class Sketch extends PApplet {
 
     //player stuff
     image(imgPlayer, fltCarX, fltCarY);
-
     // x edge detection for player car
     if (fltCarX <= 0){
       fltCarX = width;
