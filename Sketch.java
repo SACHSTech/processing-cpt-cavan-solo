@@ -5,6 +5,7 @@ import processing.core.PVector;
 
 public class Sketch extends PApplet {
 
+  // declare PImage variables
   PImage imgSetting1;
   PImage imgSetting2;
   PImage imgSetting3;
@@ -12,7 +13,8 @@ public class Sketch extends PApplet {
   PImage imgWall;
   PImage imgBird;
   PImage imgCarTrail;
-  
+
+  // declare int variables
   int intTimeCalc = 0;
   int intTime = 0;
   int intProjectileX;
@@ -22,36 +24,39 @@ public class Sketch extends PApplet {
   int intWallTwoX = 0;
   int intHealth = 100;
   int intGas = 100;
-  
-  float fltBirdCount = random(5,10);
+
+  // cast random float as int
+  float fltBirdCount = random(5,8);
   int intBirdCount = (int)fltBirdCount;
-  
+
+  // declare float variables
   float[] birdX = new float [intBirdCount];
   float[] birdY = new float [intBirdCount];
   float fltBirdSpeedX = 0;
   float fltBirdSpeedY = 0;
   float fltCarX = 700;
   float fltCarY = 300;
-  
-  
 
+  // declare boolean variables
   boolean blnMainMenu = true;
   boolean blnGame1 = false;
   boolean blnGame2 = false;
   boolean blnGame3 = false;
   boolean blnGameStart = false;
   boolean blnIFrames = false;
+  boolean blnTrailOn = true;
   
-
+  // declare PVector arraylist
   ArrayList<PVector> pvCarTrail = new ArrayList<PVector>();
-  
+
+  // set size
   public void settings() {
     size(800, 400);
   }
 
-
   public void setup() {
 
+    // resize and load images
     imgSetting1 = loadImage("StreetBackground1.jpg");
     imgSetting1.resize(width, height);
 
@@ -71,8 +76,9 @@ public class Sketch extends PApplet {
     imgBird.resize(50, 50);
 
     imgCarTrail = loadImage("CarTrail.png");
-    imgCarTrail.resize(400, 75);
-      
+    imgCarTrail.resize(200, 60);
+
+    // setup bird's intial position
     for (int i = 0; i < birdY.length; i++){
       birdY[i] = random(0,100);
       birdX[i] = random(width);
@@ -84,37 +90,42 @@ public class Sketch extends PApplet {
   public void draw() {
 
     if (blnMainMenu == true) {
-      // main menu screen
+      // add main menu
     }
 
+    // if key 1 is pressed easy difficulty is played
     if (keyPressed && key == '1' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame1 = true;
     }
 
+    // if key 2 is pressed normal difficulty is played
     if (keyPressed && key == '2' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame2 = true;
     }
 
+    // if key 3 is pressed hard difficulty is played
     if (keyPressed && key == '3' && blnMainMenu == true) {
       blnMainMenu = false;
       blnGame3 = true;
     }
-    
+
+    // loads background 1 if easy is selected
     if (blnGame1 == true) {
       intTime = 0;
       blnGameStart = true;
       image(imgSetting1, 0, 0);
     }
 
+    // loads background 2 if medium is selected
     if (blnGame2 == true) {
       intTime = 0; 
       blnGameStart = true;
       image(imgSetting2, 0, 0);
     }
 
-
+    // loads background 3 if hard is selected
     if (blnGame3 == true) {
       intTime = 0;
       blnGameStart = true;
@@ -124,15 +135,19 @@ public class Sketch extends PApplet {
   //game start
   if (blnGameStart == true && intHealth > 0){
 
-  if (keyPressed == false){
-    fltCarX -= 1;
-  }
+    // automatically moves the player forward because they are on a highway
+    if (keyPressed == false){
+      fltCarX -= 1;
+    }
 
-  pvCarTrail.add(new PVector(fltCarX, fltCarY));
-    
-  if (pvCarTrail.size() > 20){
-    pvCarTrail.remove(0);
-  }
+    if (blnTrailOn == true) {
+      // add trail to the position of the player car
+      pvCarTrail.add(new PVector(fltCarX, fltCarY));
+    }
+    // if more than 10 trail images are printed then remove
+    if (pvCarTrail.size() > 10){
+      pvCarTrail.remove(0);
+    }
 
     // not exact seconds but close enough
     intTimeCalc += 2;
@@ -141,12 +156,13 @@ public class Sketch extends PApplet {
     fill(0);
     text("time: " + intTime, width/1.5f, height/3.8f);
     text("health: " + intHealth, width/2.2f, height/3.8f);
-    text("gas: " + intGas, width/1.2f, height/3.8f);
+    text("gas: " + intGas, width/2.5f, height/3.8f);
 
 
     //player stuff
     image(imgPlayer, fltCarX, fltCarY);
 
+    // x edge detection for player car
     if (fltCarX <= 0){
       fltCarX = width;
     }
@@ -154,14 +170,15 @@ public class Sketch extends PApplet {
       fltCarX = width-100;
     }
 
+    // y edge detection for player car
     if (fltCarY <= height/2){
       fltCarY = height/2 + 1;
     }
     else if (fltCarY >= height-50){
       fltCarY = height-51;
     }
-    
 
+    // x edge detection for walls
     if (intWallOneX >= width){
       intWallOneX = 0;
     }
@@ -169,7 +186,7 @@ public class Sketch extends PApplet {
       intWallTwoX = 0;
     }
 
-    // Brick Wall
+    // When game starts spawns and moves brick walls
     if (intTime >= 0){
       image(imgWall, intWallOneX, height/2);
       intWallOneX += intWallSpeed;
@@ -177,7 +194,7 @@ public class Sketch extends PApplet {
       intWallTwoX += intWallSpeed + 1;
       }
 
-    // Birds
+    // random values of bird speed depend on the level of difficulty 
     if (intTime > 10 && blnGame1 == true){
       fltBirdSpeedX = random(0,1);
       fltBirdSpeedY = random(0,1);
@@ -191,6 +208,7 @@ public class Sketch extends PApplet {
       fltBirdSpeedY = random(0,10);
     }
 
+    // spawns the birds based on array length and makes the birds move 
     for (int i = 0; i < birdY.length; i++){
         
       image(imgBird, birdX[i], birdY[i]);
@@ -198,40 +216,38 @@ public class Sketch extends PApplet {
       birdY[i] += fltBirdSpeedY;
 
       // Edge detection, when the birds go offscreen they respawn at the top
-      
       if (birdX[i] < 0 || birdX[i] > width) {
         birdX[i] = random(width);;
       }
       if (birdY[i] < 0 || birdY[i] > height) {
         birdY[i] = random(0, 10);
     }
+      // collision detection birds, if iframes are on car can't get hit
       if (blnIFrames == false) {
-        // collision detection birds
         if (dist(fltCarX, fltCarY, birdX[i], birdY[i]) <= 37.4){
           intHealth -= 1;
         }
       }
 
   }
-    // Drunk Drivers
-    if (intTime % 30 == 0){
-      
-    }
-
+    // collision detection wall, if iframes are on car can't get hit
     if (blnIFrames == false){
-      //collision detection wall
       if (dist(fltCarX, fltCarY, intWallOneX, height/1.69f) <= 37.4){
           intHealth -= 1;
         }
       if (dist(fltCarX, fltCarY, intWallTwoX, height/1.26f) <= 37.4){
           intHealth -= 1;
         }
-    }
-      
-  }
-
-    
-  } 
+    }    
+  }   
+} 
+  /**
+    * If key is pressed car will move and if 'a' key is pressed you gain invincibility, and lose gas, adds trails
+    *
+    * @param keyPressed
+    * @return if key is pressed car moves and the 'a' key is pressed blnIframes = true, and gas decrease by 1, adds trails 
+    * 
+    */
   public void keyPressed() {
     if (key == 'w') {
       fltCarY -= 30;
@@ -243,25 +259,54 @@ public class Sketch extends PApplet {
       fltCarX -= 30;
       intGas -= 1;
       blnIFrames = true;
-      for (int i = 0; i < pvCarTrail.size(); i++) {
-        PVector pvTrailPosition = pvCarTrail.get(i);
-        image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+      // spawns trails based on array length
+      if (blnTrailOn == true) {
+        for (int i = 0; i < pvCarTrail.size(); i++) {
+          PVector pvTrailPosition = pvCarTrail.get(i);
+          image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+        }
       }
     }
     if (key == 'd') {
       fltCarX += 30;
     }   
   }
-
+  
+  /**
+    * If key is released spawns trail, stops being invincible, gas decreases
+    *
+    * @param keyReleased
+    * @return if key is released and equals 'a', spawns trail, blnIframes = false, gas decreases by 3
+    * 
+    */
   public void keyReleased(){
     if (key == 'a') {
       blnIFrames = false;
       intGas -= 3;
-      for (int i = 0; i < pvCarTrail.size(); i++) {
-        PVector pvTrailPosition = pvCarTrail.get(i);
-        image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+      // spawns trails based on array length
+      if (blnTrailOn == true){
+        for (int i = 0; i < pvCarTrail.size(); i++) {
+          PVector pvTrailPosition = pvCarTrail.get(i);
+          image(imgCarTrail, pvTrailPosition.x, pvTrailPosition.y);
+        }
       }
     }
   }
+
+  /**
+    * If mouse is clicked then trail turns on or off depends on it's original boolean value
+    *
+    * @param blnTrailOn
+    * @return blnTrailOn as false if true, blnTrailOn as true if false
+    * 
+    */
+  public void mouseClicked() {
+    if (blnTrailOn == true){
+      blnTrailOn = false;
+    }
+    else if (blnTrailOn == false){
+      blnTrailOn = true;
+    } 
+}
   
 }
