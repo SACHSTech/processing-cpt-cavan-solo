@@ -21,7 +21,7 @@ Brick walls are the easiest obstacle to deal with and will spawn right at the be
 Birds are the second obstacle type that appear in the game. They spawn near the top of the map at a random x and y value. Their velocity changes rapidly at a random value so their movement is extremely unpredictable. When they go offscreen they return to the top which gives the player some breathing room. If you hit one of these they won't despawn and you will lose health.
 
 ### Gas
-When you accelerate using the 'a' button you will lose gas. When you release the gas button you lose 3 gas and when holding it you lose 1 gas every interval. This makes tapping the 'a' key once to dodge an obstacle less gass efficient. Once gas runs out you have to refill, which makes you lose 60 distance. When using gas you can't lose health. Yes you can have negative distance.
+When you accelerate using the 'a' button you will lose gas. When you release the gas button you lose 10 gas and when holding it you lose 20 gas every interval. You automatically get gas every second with no limit.
 
 ### Trail
 When you click anywhere on the screen while the game is running you can turn your car trail off and on. It automatically starts on but when you click the screen the trail turns off as the trail may be found annoying to some players.
@@ -30,12 +30,9 @@ When you click anywhere on the screen while the game is running you can turn you
 # Scoring
 
 ### Distance
-The only scoring that takes place in this game is distance. The objective is to get the most distance. In order to make the game more interesting you can try not losing health or not using gas which can count as scoring; however, distance is the main scoring system.
+The only scoring that takes place in this game is distance. The objective is to get the most distance. In order to make the game more interesting you can try not losing health which can count as scoring; however, distance is the main scoring system.
 
 # Limitations
-
-### Negative Distance
-Objects will spawn at certain distances within the game. If you use too much gas and end up going too far into negative distance you may have a lack of any moving objects until you return to a positive distance. This system prevents players from spamming the 'a' key.
 
 ### Lag
 On certain devices, this game lags really hard due to the massive amount of images being displayed on the screen.

@@ -22,8 +22,8 @@ public class Sketch extends PApplet {
   int intWallSpeed = 2;
   int intWallOneX = 0;
   int intWallTwoX = 0;
-  int intHealth = 100;
-  int intGas = 100;
+  int intHealth = 300;
+  int intGas = 0;
 
   // cast random float as int
   float fltBirdCount = random(5,8);
@@ -136,8 +136,10 @@ public class Sketch extends PApplet {
   if (blnGameStart == true && intHealth > 0){
 
     // automatically moves the player forward because they are on a highway
+    // autmatically regenerates gas
     if (keyPressed == false){
       fltCarX -= 1;
+      intGas += 1;
     }
 
     if (blnTrailOn == true) {
@@ -154,9 +156,9 @@ public class Sketch extends PApplet {
     intTime = intTimeCalc/100;
     // display time
     fill(0);
-    text("time: " + intTime, width/1.5f, height/3.8f);
-    text("health: " + intHealth, width/2.2f, height/3.8f);
-    text("gas: " + intGas, width/2.5f, height/3.8f);
+    text("Time: " + intTime, width/1.5f, height/3.8f);
+    text("Health: " + intHealth, width/2, height/3.8f);
+    text("Gas: " + intGas, width/2.7f, height/3.8f);
 
 
     //player stuff
@@ -196,16 +198,16 @@ public class Sketch extends PApplet {
 
     // random values of bird speed depend on the level of difficulty 
     if (intTime > 10 && blnGame1 == true){
-      fltBirdSpeedX = random(0,1);
-      fltBirdSpeedY = random(0,1);
-    }
-    else if (intTime > 10 && blnGame2 == true){
       fltBirdSpeedX = random(0,5);
       fltBirdSpeedY = random(0,5);
     }
+    else if (intTime > 10 && blnGame2 == true){
+      fltBirdSpeedX = random(0,8);
+      fltBirdSpeedY = random(0,8);
+    }
     else if(intTime > 10 && blnGame3 == true){
-      fltBirdSpeedX = random(0,10);
-      fltBirdSpeedY = random(0,10);
+      fltBirdSpeedX = random(0,15);
+      fltBirdSpeedY = random(0,15);
     }
 
     // spawns the birds based on array length and makes the birds move 
@@ -239,7 +241,13 @@ public class Sketch extends PApplet {
           intHealth -= 1;
         }
     }    
-  }   
+  }
+    // game over screen
+  if (intHealth <= 0){
+    
+    fill(255);
+    rect(0, 0, width, height);
+  }
 } 
   /**
     * If key is pressed car will move and if 'a' key is pressed you gain invincibility, and lose gas, adds trails
@@ -255,10 +263,13 @@ public class Sketch extends PApplet {
     if (key == 's') {
       fltCarY += 30;
     }   
-    if (key == 'a') {
+    if (key == 'a' && intGas > 0) {
       fltCarX -= 30;
-      intGas -= 1;
+      intGas -= 10;
       blnIFrames = true;
+      if (intGas <= 0){
+        blnIFrames = false;
+      }
       // spawns trails based on array length
       if (blnTrailOn == true) {
         for (int i = 0; i < pvCarTrail.size(); i++) {
@@ -282,7 +293,7 @@ public class Sketch extends PApplet {
   public void keyReleased(){
     if (key == 'a') {
       blnIFrames = false;
-      intGas -= 3;
+      intGas -= 20;
       // spawns trails based on array length
       if (blnTrailOn == true){
         for (int i = 0; i < pvCarTrail.size(); i++) {
